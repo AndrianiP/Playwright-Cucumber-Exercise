@@ -1,5 +1,4 @@
 import { Page, expect} from "@playwright/test"
-import { error } from "console"
 
 export class Login {
     private readonly page: Page
@@ -25,7 +24,7 @@ export class Login {
     // Adds check to validate error message shows
     public async validateErrorMessage(expectedMessage: string){
         const errorLocator = this.page.locator(this.errorMessageElement);
-        console.log(errorLocator)
+ 
         await expect(errorLocator).toHaveText(expectedMessage);
     }
 
