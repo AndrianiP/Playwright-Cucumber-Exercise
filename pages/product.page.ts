@@ -3,23 +3,62 @@ import { Page, expect } from "@playwright/test"
 export class Product {
     private readonly page: Page;
 
-    // Classes
+
     private readonly sortDropdown: string = '.product_sort_container';
     private readonly itemPrices: string = '.inventory_item_price';
-    // IDs
-    private readonly addToCart: string = '#add-to-cart-sauce-labs-backpack';
+
+    private readonly cartBadge: string = '.shopping_cart_badge';
+    private readonly addToCartBackpack: string = '#add-to-cart-sauce-labs-backpack';
+    private readonly addToCartBikeLight: string = '#add-to-cart-sauce-labs-bike-light';
+    private readonly removeFromCartBackpack: string = '#remove-sauce-labs-backpack';
+
     private readonly hamburgerMenu: string = '#react-burger-menu-btn';
     private readonly logoutLink: string = '#logout_sidebar_link';
-
 
     constructor(page: Page) {
         this.page = page;
     }
 
     public async addBackPackToCart() {
-        await this.page.locator(this.addToCart).click();
+            await this.page.locator(this.addToCartBackpack).click();
+        }
+
+    public async addBikeLightToCart() {
+        await this.page.locator(this.addToCartBikeLight).click();
     }
 
+    public async removeBackPackFromCart() {
+        await this.page.locator(this.removeFromCartBackpack).click();
+    }
+
+    // Helper method to safely get the current cart count as a number
+    public async getCartCount(): Promise<number> {
+        const badge = this.page.locator(this.cartBadge);
+        if (await badge.isVisible()) {
+            const countText = await badge.innerText();
+            return parseInt(countText, 10);
+        }
+        return 0; // If hidden/missing, the count is 0
+    }
+
+    public async validateCartCountIncreased(previousCount: number) {
+        const currentCount = await this.getCartCount();
+        expect(currentCount).toBe(previousCount + 1);
+    }
+
+    public async validateCartCountDecreased(previousCount: number) {
+        const currentCount = await this.getCartCount();
+        expect(currentCount).toBe(previousCount - 1);
+    }
+
+    public async validateCartBadgeCount(expectedCount: string) {
+        await expect(this.page.locator(this.cartBadge)).toHaveText(expectedCount);
+    }
+    
+    public async validateCartBadgeIsEmpty() {
+        // When the cart is empty in SauceDemo, the badge element is entirely removed from the DOM
+        await expect(this.page.locator(this.cartBadge)).toBeHidden();
+    }
     public async openMenu() {
         await this.page.locator(this.hamburgerMenu).click();
     }
