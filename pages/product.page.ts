@@ -2,11 +2,15 @@ import { Page, expect } from "@playwright/test"
 
 export class Product {
     private readonly page: Page;
-    // Query
-    private readonly addToCart: string = 'button[id="add-to-cart-sauce-labs-backpack"]';
+
     // Classes
     private readonly sortDropdown: string = '.product_sort_container';
     private readonly itemPrices: string = '.inventory_item_price';
+    // IDs
+    private readonly addToCart: string = '#add-to-cart-sauce-labs-backpack';
+    private readonly hamburgerMenu: string = '#react-burger-menu-btn';
+    private readonly logoutLink: string = '#logout_sidebar_link';
+
 
     constructor(page: Page) {
         this.page = page;
@@ -16,6 +20,13 @@ export class Product {
         await this.page.locator(this.addToCart).click();
     }
 
+    public async openMenu() {
+        await this.page.locator(this.hamburgerMenu).click();
+    }
+
+    public async selectLogout() {
+            await this.page.locator(this.logoutLink).click();
+        }
     public async sortBy(sortOption: string) {
         // Selects the option by its visible text label
         await this.page.locator(this.sortDropdown).selectOption({ label: sortOption });

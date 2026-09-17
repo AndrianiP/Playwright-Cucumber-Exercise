@@ -13,3 +13,11 @@ When('I sort the items by {string}', async (sortOption: string) => {
 Then('I validate all 6 items are sorted correctly by price {string}', async (sortOption: string) => {
   await new Product(getPage()).validatePriceSort(sortOption);
 });
+
+When('I open the hamburger menu', async () => {
+    await new Product(getPage()).openMenu();
+});
+
+When('I select logout', async () => {
+    await new Product(getPage()).selectLogout();
+});

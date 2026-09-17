@@ -18,6 +18,10 @@ export class Login {
         await expect(this.page).toHaveTitle(expectedTitle);
     }
 
+    public async validateLoginButtonVisible() {
+        await expect(this.page.locator(this.loginButton)).toBeVisible();
+    }
+
     // Adds check to validate error message shows
     public async validateErrorMessage(expectedMessage: string){
         const errorLocator = this.page.locator(this.errorMessageElement);

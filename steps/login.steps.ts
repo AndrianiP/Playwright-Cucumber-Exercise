@@ -13,3 +13,7 @@ When('I login as {string}', async (userName) => {
 Then('I should see the error message {string}', async function (expectedMessage: string) {
   await  new Login(getPage()).validateErrorMessage(expectedMessage);
 });
+
+Then('I validate the login button is visible', async () => {
+    await new Login(getPage()).validateLoginButtonVisible();
+});
