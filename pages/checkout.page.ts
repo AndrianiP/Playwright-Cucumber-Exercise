@@ -10,6 +10,8 @@ export class Checkout {
     private readonly continueBtn: string = '#continue';
     private readonly finishBtn: string = '#finish';
     private readonly completeHeader: string = '.complete-header';
+    private readonly errorMessageContainer: string = '[data-test="error"]';
+    private readonly summaryTitle: string = '.title';
 
     constructor(page: Page) {
         this.page = page;
@@ -29,12 +31,22 @@ export class Checkout {
         await this.page.locator(this.zipInput).fill(zip);
     }
 
+
     public async clickContinue() {
         await this.page.locator(this.continueBtn).click();
     }
 
     public async clickFinish() {
         await this.page.locator(this.finishBtn).click();
+    }
+
+    public async validateCheckoutErrorMessage(expectedMessage: string) {
+        await expect(this.page.locator(this.errorMessageContainer)).toHaveText(expectedMessage);
+    }
+
+    public async validateSummaryPageReached() {
+        await expect(this.page).toHaveURL(/.*checkout-step-two.html/);
+        await expect(this.page.locator(this.summaryTitle)).toHaveText('Checkout: Overview');
     }
 
     public async validateOrderCompleteText(expectedText: string) {

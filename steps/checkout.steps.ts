@@ -25,3 +25,11 @@ When('I select finish', async () => {
 Then('I validate the successful purchase text {string}', async (expectedText: string) => {
     await new Checkout(getPage()).validateOrderCompleteText(expectedText);
 });
+
+Then('I should see the checkout error message {string}', async (expectedMessage: string) => {
+    await new Checkout(getPage()).validateCheckoutErrorMessage(expectedMessage);
+});
+
+Then('I should be navigated to the checkout summary page', async () => {
+    await new Checkout(getPage()).validateSummaryPageReached();
+});
