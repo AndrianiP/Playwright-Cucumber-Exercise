@@ -57,7 +57,7 @@ You will be scored based on your ability to complete the following tasks:
 - [X] Modify and extend the 'Validate product sort by price sort' from [product.feature](features/product.feature#6) with steps for each comment listed. Utilize the Scenario Outline and Examples table to parameterize the test
 - [X] Extend the testing coverage with anything you believe would be beneficial
 
-## 🧪 Feature Coverage & Validations
+## Feature Coverage & Validations
 
 ### 🔐 Login (`features/login.feature`)
 * **Title Validation:** Verifies the page title matches `"Swag Labs"` using Playwright's auto-retrying `toHaveTitle` check.
